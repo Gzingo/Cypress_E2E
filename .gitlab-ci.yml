@@ -28,7 +28,7 @@ cypress_tests:
     # Install dependencies
     - npm ci
     # Run Cypress tests
-    - npx cypress-ntlm run --parallel --record --key 59926706-4092-42ad-a16d-61db6bf59f86
+    - npx cypress-ntlm run --parallel --record --key ${CYPRESS_RECORD_KEY}
   only:
     - branches
 
