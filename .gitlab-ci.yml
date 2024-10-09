@@ -1,0 +1,58 @@
+before_script:
+  - apt-get update
+  - apt-get install -y git bash
+
+stages:
+  - test
+  - performance
+
+variables:
+  CYPRESS_LPP_QA_PASSWORD: $CYPRESS_LPP_QA_PASSWORD
+  CYPRESS_EAP_TESTING_VIEWER_PASSWORD: $CYPRESS_EAP_TESTING_VIEWER_PASSWORD
+  CYPRESS_EAP_TESTING_SHOP_PASSWORD: $CYPRESS_EAP_TESTING_SHOP_PASSWORD
+  CYPRESS_CHECKER_A_PIN: $CYPRESS_CHECKER_A_PIN
+  CYPRESS_PRODUCTION_COORDINATOR_PIN: $CYPRESS_PRODUCTION_COORDINATOR_PIN
+  URL_EPI_TEST: $URL_EPI_TEST
+  URL_MAIN: $URL_MAIN
+  URL_DEV: $URL_DEV
+  URL_TEST: $URL_TEST
+  URL_ANALYTICS: $URL_ANALYTICS
+  URL_INSIDE: $URL_INSIDE
+
+# Job to run Cypress tests in parallel
+cypress_tests:
+  stage: test
+  image: cypress/included:13.13.0
+  parallel: 3
+  script:
+    # Install dependencies
+    - npm ci
+    # Run Cypress tests
+    - npx cypress-ntlm run --parallel --record --key 59926706-4092-42ad-a16d-61db6bf59f86
+  only:
+    - branches
+
+# Job to run k6 performance tests after Cypress tests
+k6_performance_test:
+  stage: performance
+  image: loadimpact/k6:latest
+  needs:
+    - cypress_tests
+  script:
+    # run k6 performance tests
+    - k6 run "cypress/k6_performance_test/K6_loadTest.js"
+  only:
+    - branches
+
+# Explanation:
+# This configuration runs Cypress tests and k6 performance tests in a GitLab CI pipeline,
+# providing flexibility and efficiency in testing and performance monitoring workflows.
+# Running k6 after the Cypress tests ensures that tests have access to all the resources they need.
+# This separation leads to more reliable and consistent test results.
+#
+# stages: Defines two stages: test and performance. Jobs within the same stage run concurrently, and stages run sequentially.
+#
+# cypress_tests:
+# stage: test stage.
+# image: Uses the cypress/included Docker image with specific Node.js and Cypress versions to run Cypress tests.
+# parallel: Configures Cyp

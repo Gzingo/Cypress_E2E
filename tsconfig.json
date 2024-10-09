@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "target": "es5",
+    "lib": [
+      "es5",
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "noFallthroughCasesInSwitch": true,
+    "types": [
+      "cypress",
+      "node"
+    ]
+  },
+  "include": [
+    "src/**/*.cy.{js,ts,jsx,tsx}",
+    "src/**/*.d.{js,ts,jsx,tsx}",
+    "**/*.ts",
+    "scripts",
+    "backend",
+    "src/__tests__",
+    "cypress.d.ts",
+    "src/utils/portUtils.ts"
+  ]
+}

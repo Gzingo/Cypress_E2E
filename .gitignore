@@ -1,0 +1,28 @@
+# .gitignore
+
+# Ignore Cypress screenshots and videos directories
+cypress/screenshots/
+cypress/videos/
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore environment variables
+.env
+
+# Ignore Docker files
+docker-compose.yml
+Dockerfile
+
+# Ignore log files
+*.log
+
+# Ignore IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
